@@ -1,11 +1,11 @@
 import React from 'react';
 
-function Semester(props) {
+function ClassList(props) {
     return (
         <div>
-            Semester Page
+            Class Page
         </div>
     );
 }
 
-export default Semester;
+export default ClassList;
