@@ -61,6 +61,7 @@ function StudentDetail(props) {
                 }})
                 .then(response => {
                     alert("The Student is updated");
+                    setToken(token);
                     navigate("/StudentList");
                 })
                 .catch(error=> {

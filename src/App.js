@@ -15,6 +15,11 @@ import AddCourse from "./components/AddCourse";
 import CourseDetail from "./components/CourseDetail";
 import LecturerDetail from "./components/LecturerDetail";
 import StudentDetail from "./components/StudentDetail";
+import ClassDetail from "./components/ClassDetail";
+import SelectSemester from "./components/SelectSemester";
+import SelectCourse from "./components/SelectCourse";
+import SelectLecturer from "./components/SelectLecturer";
+import SelectStudents from "./components/SelectStudents";
 
 function AddStudent() {
   return null;
@@ -31,20 +36,24 @@ function App() {
       <Routes>
         <Route path="/" element={ <Home /> } />
         <Route path="SemesterList" element={ <SemesterList /> } />
+        <Route path="SemesterDetail" element={ <SemesterDetail />} />
         <Route path="ClassList" element={ <ClassList /> } />
         <Route path="CourseList" element={ <CourseList /> } />
         <Route path="StudentList" element={ <StudentList /> } />
         <Route path="LecturerList" element={ <LecturerList /> } />
         <Route path="Login" element={ <Login /> } />
         <Route path="AddSemester" element={ <AddSemester />} />
-        <Route path="SemesterDetail" element={ <SemesterDetail />} />
         <Route path="AddCourse" element={ <AddCourse />} />
         <Route path="CourseDetail" element={ <CourseDetail />} />
         <Route path="AddLecturer" element={ <AddCourse />} />
         <Route path="LecturerDetail" element={ <LecturerDetail />} />
         <Route path="AddStudent" element={ <AddStudent />} />
         <Route path="StudentDetail" element={ <StudentDetail />} />
-
+        <Route path="ClassDetail" element={ <ClassDetail />} />
+        <Route path="SelectSemester" element={ <SelectSemester />} />
+        <Route path="SelectCourse" element={ <SelectCourse />} />
+        <Route path="SelectLecturer" element={ <SelectLecturer />} />
+        <Route path="SelectStudents" element={ <SelectStudents />} />
       </Routes>
     </div>
   );

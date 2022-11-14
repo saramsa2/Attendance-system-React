@@ -25,8 +25,8 @@ function AddSemester(props) {
                     "Authorization": "Token "+token
                 }})
                 .then(response => {
+                    setToken(token);
                     alert("New semester is created");
-                    window.location.reload(false);
                 })
                 .catch(error=> {
                     console.log(error);

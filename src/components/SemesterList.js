@@ -88,8 +88,6 @@ function SemesterList(props) {
                 <div>You don't have permission</div>
             }
         </div>
-
-
     );
 }
 

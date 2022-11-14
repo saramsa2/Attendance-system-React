@@ -43,7 +43,6 @@ function CourseDetail(props) {
 
     function updateCourse() {
         if(hasToken){
-            let login_token = token;
             axios.patch(BaseUrl+"course_viewset/" + course_id + "/",
                 {
                     code:code,
@@ -55,6 +54,7 @@ function CourseDetail(props) {
                 .then(response => {
                     alert("The semester is updated");
                     navigate("/CourseList");
+                    setToken(token);
                 })
                 .catch(error=> {
                     console.log(error);
