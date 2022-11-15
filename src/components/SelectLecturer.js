@@ -61,7 +61,7 @@ function SelectLecturer(props) {
                 <React.Fragment>
                     <Select className={"basic-single"} classNamePrefix="select" isSearchable={true} isClearable={true}
                             value={LecturerOptions.find(object => object.value === selectedLecturer)}
-                            options={LecturerOptions}  onChange={lecturerHandler}/>
+                            options={LecturerOptions}  onChange={lecturerHandler}  menuPortalTarget={document.querySelector('body')}/>
                 </React.Fragment>
             :
                 <React.Fragment>

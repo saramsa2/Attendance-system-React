@@ -25,8 +25,8 @@ function AddCourse(props) {
                     "Authorization": "Token "+token
                 }})
                 .then(response => {
-                    setToken(token);
                     alert("New course is created");
+                    props.parentCallback()
                 })
                 .catch(error=> {
                     console.log(error);
@@ -37,22 +37,28 @@ function AddCourse(props) {
 
     return (
         <div>
-            <h3>New Course</h3>
-                <div className={"table-responsive"}>
-                <table className={"table table-striped mb-0 card-body p-0 table-hover table-fixed"}>
-                    <tbody>
-                    <tr>
-                        <th><p>Course Code</p></th>
-                        <th><p>Name</p></th>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td><input type={"text"} id={"code"} /></td>
-                        <td><input type={"text"} id={"name"} /></td>
-                        <td><button className={"btn btn-info form-control text-reset"} onClick={addCourse} >Create</button></td>
-                    </tr>
-                </tbody></table></div>
-                <br/><br/>
+            {hasToken ?
+                <React.Fragment>
+                    <h3>New Course</h3>
+                    <div className={"table-responsive"}>
+                    <table className={"table table-striped mb-0 card-body p-0 table-hover table-fixed"}>
+                        <tbody>
+                        <tr>
+                            <th><p>Course Code</p></th>
+                            <th><p>Name</p></th>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><input type={"text"} id={"code"} /></td>
+                            <td><input type={"text"} id={"name"} /></td>
+                            <td><button className={"btn btn-info form-control text-reset"} onClick={addCourse} >Create</button></td>
+                        </tr>
+                    </tbody></table></div>
+                    <br/>
+                </React.Fragment>
+                :
+                <div>You don't have permission</div>
+            }
         </div>
     );
 }

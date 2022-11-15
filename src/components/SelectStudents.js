@@ -63,7 +63,7 @@ function SelectStudents(props) {
                 <React.Fragment>
                     <Select className={"basic-multi-select"} isSearchable={true} isMulti
                             value={StudentOptions.filter(object => selectedStudents.includes(object.value))}
-                            options={StudentOptions} onChange={studentHandler} />
+                            options={StudentOptions} onChange={studentHandler} menuPortalTarget={document.querySelector('body')} />
                 </React.Fragment>
             :
                 <React.Fragment>

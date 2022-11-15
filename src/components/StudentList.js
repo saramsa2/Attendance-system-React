@@ -11,6 +11,7 @@ import {Link} from "react-router-dom";
 function StudentList(props) {
     const [token, setToken] = useState("");
     const [hasToken, setHasToken] = useState(false);
+    const [checker, setChecker] = useState("");
     const [students, setStudents] = useState([]);
 
     useEffect(() => {
@@ -28,7 +29,7 @@ function StudentList(props) {
                     console.log(error);
                 });
         }
-    },[hasToken])
+    },[hasToken, checker])
 
     useEffect(()=>{
         if(localStorage.getItem("token")) {
@@ -46,17 +47,22 @@ function StudentList(props) {
             }})
             .then(response => {
                 alert("The lecturer is deleted");
-                window.location.reload(false);
+                setChecker(checker +1);
             })
             .catch(error => {
                 console.log(error);
             })
     }
 
+    const addStudentCallback = () => {
+        setChecker(checker+1);
+    }
+
     return (
-        <div className={"card container"}>
+        <div className={"container"} style={{paddingBottom:"200px"}}>
             {hasToken ?
-                <div className={"table-responsive table-scroll"} data-mdb-perfect-scrollbar={"true"}>
+                <div className={"table-responsive table-scroll"} data-mdb-perfect-scrollbar={"true"} >
+                    <h2>Student List</h2>
                     <table className={"table table-striped mb-0 card-body p-0"}>
                         <thead className={"table-dark"}>
                         <tr>
@@ -80,7 +86,7 @@ function StudentList(props) {
                         </tbody>
                     </table>
                     <footer className={"fixed-bottom  container card"}>
-                        <AddStudent />
+                        <AddStudent parentCallback={addStudentCallback} />
                     </footer>
                 </div>
             :

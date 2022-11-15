@@ -56,7 +56,7 @@ function SelectSemester(props) {
                 <React.Fragment>
                     <Select id={"selector"} className={"basic-single"} isSearchable={true}
                             value={SemesterOptions.find(object => object.value === selectedSemester)}
-                            options={SemesterOptions}  onChange={semesterHandler}/>
+                            options={SemesterOptions}  onChange={semesterHandler}  menuPortalTarget={document.querySelector('body')}/>
                 </React.Fragment>
             :
                 <React.Fragment>

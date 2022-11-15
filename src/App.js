@@ -20,6 +20,8 @@ import SelectSemester from "./components/SelectSemester";
 import SelectCourse from "./components/SelectCourse";
 import SelectLecturer from "./components/SelectLecturer";
 import SelectStudents from "./components/SelectStudents";
+import AddClass from "./components/AddClass";
+import Attendance from "./components/Attendance";
 
 function AddStudent() {
   return null;
@@ -42,18 +44,16 @@ function App() {
         <Route path="StudentList" element={ <StudentList /> } />
         <Route path="LecturerList" element={ <LecturerList /> } />
         <Route path="Login" element={ <Login /> } />
-        <Route path="AddSemester" element={ <AddSemester />} />
-        <Route path="AddCourse" element={ <AddCourse />} />
         <Route path="CourseDetail" element={ <CourseDetail />} />
-        <Route path="AddLecturer" element={ <AddCourse />} />
         <Route path="LecturerDetail" element={ <LecturerDetail />} />
-        <Route path="AddStudent" element={ <AddStudent />} />
         <Route path="StudentDetail" element={ <StudentDetail />} />
         <Route path="ClassDetail" element={ <ClassDetail />} />
         <Route path="SelectSemester" element={ <SelectSemester />} />
         <Route path="SelectCourse" element={ <SelectCourse />} />
         <Route path="SelectLecturer" element={ <SelectLecturer />} />
         <Route path="SelectStudents" element={ <SelectStudents />} />
+        <Route path="Attendance" element={ <Attendance />} />
+
       </Routes>
     </div>
   );

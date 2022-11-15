@@ -9,6 +9,7 @@ function CourseList(props) {
     const [token, setToken] = useState("");
     const [hasToken, setHasToken] = useState(false);
     const [courses, setCourses] = useState([]);
+    const [checker, setChecker] = useState("");
 
     useEffect(() => {
         if(hasToken) {
@@ -25,13 +26,14 @@ function CourseList(props) {
                     console.log(error);
                 });
         }
-    }, [hasToken])
+    }, [hasToken, checker])
 
     useEffect(()=>{
         if(localStorage.getItem("token")) {
             setToken(localStorage.getItem("token"));
             setHasToken(true);
         }
+        setChecker(localStorage.getItem("checker"));
     },[token])
 
     function deleteCourse(event) {
@@ -42,17 +44,23 @@ function CourseList(props) {
             }})
             .then(response => {
                 alert("The course is deleted");
-                window.location.reload(false);
+                // window.location.reload(false);
+                setChecker(checker +1);
             })
             .catch(error => {
                 console.log(error);
             })
     }
 
+    const addCourseCallback = () => {
+        setChecker(checker +1);
+    }
+
     return (
-        <div className={"card container"}>
+        <div className={"container"} style={{paddingBottom:200}}>
             {hasToken?
             <div className={"table-responsive table-scroll"} data-mdb-perfect-scrollbar={"true"}>
+                <h2>Course List</h2>
                 <table className={"table table-striped mb-0 card-body p-0"}>
                     <thead className={"table-dark"}>
                         <tr>
@@ -76,7 +84,7 @@ function CourseList(props) {
                     </tbody>
                 </table>
                 <footer className={"fixed-bottom  container card"}>
-                    <AddCourse/>
+                    <AddCourse parentCallback={addCourseCallback} />
                 </footer>
             </div>
             :

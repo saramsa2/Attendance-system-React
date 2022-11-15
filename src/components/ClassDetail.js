@@ -65,7 +65,7 @@ function ClassDetail(props) {
                     "Authorization": "Token "+token
                 }})
                 .then(response => {
-                    // alert("The semester is updated");
+                    alert("The class is updated");
                     navigate("/ClassList");
                     setToken(token);
                 })
@@ -112,12 +112,12 @@ function ClassDetail(props) {
                                                 <td><input className={"form-control"}  id={"number"} type={"number"} value={number} onChange={numberHandler} /></td>
                                             </tr>
                                             <tr>
-                                                <td><label className={"control-label text-right align-middle"}>Semester</label></td>
-                                                <td><SelectSemester state={{semester_id:semester}} parentCallback={semesterCallback} /></td>
-                                            </tr>
-                                            <tr>
                                                 <td><label className={" control-label text-right align-middle"}>Course</label></td>
                                                 <td><SelectCourse state={{course_id:course}} parentCallback={courseCallback} /></td>
+                                            </tr>
+                                            <tr>
+                                                <td><label className={"control-label text-right align-middle"}>Semester</label></td>
+                                                <td><SelectSemester state={{semester_id:semester}} parentCallback={semesterCallback} /></td>
                                             </tr>
                                             <tr>
                                                 <td><label className={" control-label text-right align-middle"}>Lecturer</label></td>

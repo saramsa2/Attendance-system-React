@@ -6,30 +6,18 @@ import AddSemester from "./AddSemester";
 import UserName from "./UserName";
 import CourseName from "./CourseName";
 import LecturerName from "./LecturerName";
+import AddClass from "./AddClass";
+import SelectCourse from "./SelectCourse";
+import SelectSemester from "./SelectSemester";
+import SelectLecturer from "./SelectLecturer";
+import SelectStudents from "./SelectStudents";
 
 function ClassList(props) {
     const [token, setToken] = useState("");
     const [hasToken, setHasToken] = useState(false);
+    const [checker, setChecker] = useState("");
     const [classes, setClasses] = useState([]);
     const [semesters, setSemesters] = useState([]);
-    const [lecturers, setLecturers] = useState([]);
-
-    useEffect(() => {
-        if(hasToken) {
-            axios.get(BaseUrl + "lecturer_viewset/",
-                {
-                    headers: {
-                        "Authorization": "Token " + token
-                    }
-                })
-                .then(response => {
-                    setLecturers(response.data);
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-        }
-    }, [hasToken])
 
     useEffect(() => {
         if(hasToken) {
@@ -46,7 +34,7 @@ function ClassList(props) {
                     console.log(error);
                 });
         }
-    }, [hasToken]);
+    }, [hasToken, checker]);
 
 
     useEffect(() => {
@@ -64,7 +52,7 @@ function ClassList(props) {
                     console.log(error);
                 });
         }
-    },[hasToken])
+    },[hasToken, checker])
 
     useEffect(()=>{
         if(localStorage.getItem("token")) {
@@ -73,15 +61,31 @@ function ClassList(props) {
         }
     },[token])
 
-    function deleteClass() {
+    function deleteClass(event) {
+         let class_id = event.target.value;
+        axios.delete(BaseUrl+"class_viewset/"+class_id+"/",
+            {headers:{
+                    "Authorization": "Token "+token
+            }})
+            .then(response => {
+                alert("The course is deleted");
+                setChecker(checker+1);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
 
+    const addClassCallback = () => {
+        setChecker(checker+1);
     }
 
     return (
-        <div>
+        <div className={"container"} style={{paddingBottom:50}}>
             {hasToken?
             <div>
                 <div className={"table-responsive table-scroll"} data-mdb-perfect-scrollbar={"true"}>
+                    <h2>Class List</h2>
                     <table className={"table table-striped mb-0 card-body p-0 table-hover table-fixed"}>
                         <thead className={"table-dark"}>
                         <tr>
@@ -98,11 +102,10 @@ function ClassList(props) {
                         <tbody>
                         {classes.map(theClass =>
                             <tr key={theClass.id}>
-                                <td>{theClass.number}</td>
+                                <td><Link to={"/Attendance"} state={{class_id:theClass.id, class_number:theClass.number}} >{theClass.number}</Link></td>
                                 <td><CourseName courseId={theClass.course} /></td>
                                 <td>{semesters.find(object => {return object.id === theClass.semester}).year}</td>
                                 <td>{semesters.find(object => {return object.id === theClass.semester}).semester}</td>
-                                {/*<td>{lecturers.find(object => {return object.staff_id === theClass.lecturer})}</td>*/}
                                 <td><LecturerName staff_id={theClass.lecturer} /></td>
                                 <td>{theClass.student.findLastIndex(object => {return object > 1})+1}</td>
                                 <td>
@@ -116,9 +119,9 @@ function ClassList(props) {
                         </tbody>
                     </table>
                 </div>
-                <footer className={"fixed-bottom  container card"}>
-                    {/*<AddSemester/>*/}
-                </footer>
+                <header className={" float-top  container card"}>
+                   <AddClass parentCallback={addClassCallback} />
+                </header>
             </div>
             :
                 <div>You don't have permission</div>

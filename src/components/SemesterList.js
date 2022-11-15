@@ -8,6 +8,7 @@ function SemesterList(props) {
     const [token, setToken] = useState("");
     const [hasToken, setHasToken] = useState(false);
     const [semesters, setSemesters] = useState([]);
+    const [checker, setChecker] = useState(1);
 
     useEffect(() => {
         if(hasToken) {
@@ -24,7 +25,7 @@ function SemesterList(props) {
                     console.log(error);
                 });
         }
-    },[hasToken])
+    },[hasToken, checker])
 
     useEffect(()=>{
         if(localStorage.getItem("token")) {
@@ -41,17 +42,19 @@ function SemesterList(props) {
             }})
             .then(response => {
                 alert("Semester is deleted");
-                setHasToken(hasToken);
-                // window.location.reload(false);
+                setChecker(checker +1);
             })
             .catch(error => {
                 console.log(error);
             })
     }
 
-    return (
+    const addSemesterCallback = () => {
+        setChecker(checker +1);
+    }
 
-        <div className={"card container"}>
+    return (
+        <div className={"container"}  style={{paddingBottom:"200px"}}>
             {hasToken?
             <div>
                 <div className={"table-responsive table-scroll"} data-mdb-perfect-scrollbar={"true"}>
@@ -81,7 +84,7 @@ function SemesterList(props) {
                     </table>
                 </div>
                 <footer className={"fixed-bottom  container card"}>
-                    <AddSemester/>
+                    <AddSemester parentCallback={addSemesterCallback} />
                 </footer>
             </div>
             :

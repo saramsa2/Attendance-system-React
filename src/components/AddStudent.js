@@ -30,9 +30,8 @@ function AddStudent(props) {
                     "Authorization": "Token "+token
                 }})
                 .then(response => {
-                    setToken(token);
                     alert("New student is created");
-
+                    props.parentCallback();
                 })
                 .catch(error=> {
                     console.log(error);
@@ -70,7 +69,7 @@ function AddStudent(props) {
                             </tbody>
                         </table>
                     </div>
-                    <br/><br/>
+                    <br/>
                 </React.Fragment>
             :
                 <div>You don't have permission</div>

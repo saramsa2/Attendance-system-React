@@ -33,7 +33,6 @@ function Login(props) {
                 password: password,
             })
             .then(response =>  {
-                console.log(response.data);
                 setToken(response.data);
                 setHasToken(true);
                 localStorage.setItem("token", response.data.token);

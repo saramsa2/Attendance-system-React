@@ -54,7 +54,6 @@ function CourseDetail(props) {
                 .then(response => {
                     alert("The semester is updated");
                     navigate("/CourseList");
-                    setToken(token);
                 })
                 .catch(error=> {
                     console.log(error);

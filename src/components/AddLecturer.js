@@ -27,8 +27,8 @@ function AddLecturer(props) {
                     "Authorization": "Token "+token
                 }})
                 .then( response => {
-                    setToken(token);
                     alert("New lecturer is created");
+                    props.parentCallback();
                 })
                 .catch(error => {
                     console.log(error);
@@ -55,7 +55,7 @@ function AddLecturer(props) {
                                 <td><input type={"text"} id={"username"}/></td>
                                 <td><input type={"password"} id={"password"}/></td>
                                 <td><input type={"text"} id={"email"}/></td>
-                                <td><input type={"date"} id={"dob"}/></td>
+                                <td><input type={"date"} id={"dob"} /></td>
                                 <td>
                                     <button className={"btn btn-info form-control text-reset"}
                                             onClick={addLecturer}>Create
@@ -65,7 +65,7 @@ function AddLecturer(props) {
                             </tbody>
                         </table>
                     </div>
-                    <br/><br/>
+                    <br/>
                 </React.Fragment>
                 :
                 <div>You don't have permission</div>

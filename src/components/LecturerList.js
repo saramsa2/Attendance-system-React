@@ -9,6 +9,7 @@ import {Link} from "react-router-dom";
 function LecturerList(props) {
     const [token, setToken] = useState("");
     const [hasToken, setHasToken] = useState(false);
+    const [checker, setChecker] = useState(1);
     const [lecturers, setLecturers] = useState([]);
 
     useEffect(() => {
@@ -26,7 +27,7 @@ function LecturerList(props) {
                     console.log(error);
                 });
         }
-    }, [hasToken])
+    }, [hasToken, checker])
 
     useEffect(()=>{
         if(localStorage.getItem("token")) {
@@ -46,7 +47,7 @@ function LecturerList(props) {
                 })
                 .then(response => {
                     alert("The lecturer is deleted");
-                    window.location.reload(false);
+                    setChecker(checker +1);
                 })
                 .catch(error => {
                     console.log(error);
@@ -54,10 +55,15 @@ function LecturerList(props) {
         }
     }
 
+    const addLecturerCallback = () => {
+        setChecker(checker +1 );
+    }
+
     return (
-        <div className={"card container"}>
+        <div className={"container"}>
             {hasToken?
             <div className={"table-responsive table-scroll"} data-mdb-perfect-scrollbar={"true"}>
+                <h2>Lecturer List</h2>
                 <table className={"table table-striped mb-0 card-body p-0"}>
                     <thead className={"table-dark"}>
                     <tr>
@@ -81,7 +87,7 @@ function LecturerList(props) {
                     </tbody>
                 </table>
                 <footer className={"fixed-bottom  container card"}>
-                    <AddLecturer />
+                    <AddLecturer parentCallback={addLecturerCallback} />
                 </footer>
             </div>
             :
