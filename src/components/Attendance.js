@@ -159,7 +159,7 @@ function Attendance(props) {
                         </div>
 
                         <div className="col-8 tab-content" id="v-pills-tabContent">
-                            <div className={"tab-pane fade show active"} id={"panel"} role={"tabpanel"} aria-labelledby={"v-pills-home-tab"}>
+                            <div className={"tab-pane fade show active"} id={"panel"} aria-labelledby={"v-pills-home-tab"}>
                                 <ClassAttendance state={{class_id:class_id, selected_date: selectedDate, total_day:classDates.length}} />
                             </div>
                         </div>

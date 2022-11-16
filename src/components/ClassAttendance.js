@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {useLocation} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import axios from "axios";
 import {BaseUrl} from "./constants";
 import UserName from "./UserName";
 import {Button} from "react-bootstrap";
+import attendance from "./Attendance";
 
 function ClassAttendance(props) {
     const class_id = props.state.class_id;
@@ -72,7 +73,7 @@ function ClassAttendance(props) {
             }
         })
         setClassCollegeDay(tempCollegeDay);
-    }, [collegeDays, class_date]);
+    }, [collegeDays, class_date, checker]);
 
     useEffect(() => {
         if(hasToken) {
@@ -101,8 +102,8 @@ function ClassAttendance(props) {
     },[token])
 
     function attendanceHandler(event) {
-        let collegeDay_id = event.target.value;
-        let new_attendance = !classCollegeDay.find(object => object.id = collegeDay_id).attendance
+        let collegeDay_id = parseInt(event.target.value);
+        let new_attendance = !classCollegeDay.find(object => object.id === collegeDay_id).attendance
          if(hasToken){
             axios.patch(BaseUrl+"collegeday_viewset/" + collegeDay_id + "/",
                 {
@@ -112,7 +113,6 @@ function ClassAttendance(props) {
                     "Authorization": "Token "+token
                 }})
                 .then(response => {
-                    alert("The attendance is updated");
                     setChecker(checker+1);
                 })
                 .catch(error=> {
@@ -144,7 +144,7 @@ function ClassAttendance(props) {
                                 {attendCounters.length > 0 ?
                                     <td>{attendCounters.find(obj => obj.id === student).value} / {class_total_day} </td>:
                                     <td/>}
-                                <td></td>
+                                <td><Link to={"/SendEmail"} state={{student:student, class_id:class_id}} className={"btn btn-primary"}>Send Email</Link></td>
                             </tr>
                         )}
                         </tbody>
@@ -169,10 +169,10 @@ function ClassAttendance(props) {
                                 <td>{classCollegeDay.find(object => object.student === student)?
                                     <div>
                                         {classCollegeDay.find(object => object.student === student).attendance?
-                                        <Button className={"btn btn-primary"} value={classCollegeDay.find(object => object.student === student).id}
+                                        <Button className={"btn btn-primary"} style={{width:200}} value={classCollegeDay.find(object => object.student === student).id}
                                                 onClick={attendanceHandler}>Attend</Button>
                                         :
-                                        <Button className={"btn btn-danger"} value={classCollegeDay.find(object => object.student === student).id}
+                                        <Button className={"btn btn-danger"} style={{width:200}} value={classCollegeDay.find(object => object.student === student).id}
                                                 onClick={attendanceHandler}>Absent</Button>}
                                     </div>
                                     :<p>WAIT</p>}</td>

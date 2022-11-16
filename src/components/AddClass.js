@@ -11,6 +11,7 @@ function AddClass(props) {
     const navigate = useNavigate();
     const [token, setToken] = useState("");
     const [hasToken, setHasToken] = useState(false);
+    const [checker, setChecker] = useState(1);
     const [number, setNumber] = useState("");
     const [course, setCourse] = useState("");
     const [semester, setSemester] = useState("");
@@ -22,8 +23,7 @@ function AddClass(props) {
             setToken(localStorage.getItem("token"));
             setHasToken(true);
         }
-    },[token])
-
+    },[token, checker])
 
     function addClass() {
         if(hasToken){
@@ -41,10 +41,11 @@ function AddClass(props) {
                 .then(response => {
                     alert("The class is created");
                     props.parentCallback();
+                    window.location.reload(false);
                 })
                 .catch(error=> {
                     console.log(error);
-                    alert("Failed to update");
+                    alert("Failed to create");
                 });
         }
     }

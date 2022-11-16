@@ -58,9 +58,7 @@ function Navigation(props) {
             {hasToken?
               <Button className={"btn btn-info float-right"} onClick={logout}>Logout</Button>
                 :
-                // window.location.href="Login"
                 <Link to={"/Login"} className={"btn btn-info float-right"}>Login</Link>
-                // navigate("/Login")
               }
         </Navbar.Collapse>
       </Container>

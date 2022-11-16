@@ -27,6 +27,7 @@ function AddCourse(props) {
                 .then(response => {
                     alert("New course is created");
                     props.parentCallback()
+                    window.location.reload(false);
                 })
                 .catch(error=> {
                     console.log(error);

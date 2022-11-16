@@ -44,8 +44,7 @@ function SelectStudents(props) {
     },[token])
 
     students.map(student => {
-
-        let username = <UserName userId={student.user.id} />;
+        let username = student.user.username;
         StudentOptions.push({value: student.student_id, label: username });
     });
 

@@ -22,6 +22,7 @@ import SelectLecturer from "./components/SelectLecturer";
 import SelectStudents from "./components/SelectStudents";
 import AddClass from "./components/AddClass";
 import Attendance from "./components/Attendance";
+import SendEmail from "./components/sendEmail";
 
 function AddStudent() {
   return null;
@@ -48,11 +49,8 @@ function App() {
         <Route path="LecturerDetail" element={ <LecturerDetail />} />
         <Route path="StudentDetail" element={ <StudentDetail />} />
         <Route path="ClassDetail" element={ <ClassDetail />} />
-        <Route path="SelectSemester" element={ <SelectSemester />} />
-        <Route path="SelectCourse" element={ <SelectCourse />} />
-        <Route path="SelectLecturer" element={ <SelectLecturer />} />
-        <Route path="SelectStudents" element={ <SelectStudents />} />
         <Route path="Attendance" element={ <Attendance />} />
+        <Route path="SendEmail" element={ <SendEmail />} />
 
       </Routes>
     </div>

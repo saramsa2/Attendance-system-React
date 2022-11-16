@@ -13,6 +13,8 @@ function StudentDetail(props) {
     const [email, setEmail] = useState("");
     const [dob, setDob] = useState("");
     const [user_id, setUser_id] = useState("");
+    const [first_name, setFirst_name] = useState("");
+    const [last_name, setLast_name] = useState("");
 
     useEffect(() =>{
         axios.get(BaseUrl + "student_viewset/" + student_id + "/",
@@ -24,6 +26,8 @@ function StudentDetail(props) {
             .then(response => {
                 setUser_id(response.data.user.id);
                 setUsername(response.data.user.username);
+                setFirst_name(response.data.user.first_name);
+                setLast_name(response.data.user.last_name);
                 setEmail(response.data.user.email);
                 setDob(response.data.DOB);
             })
@@ -53,7 +57,9 @@ function StudentDetail(props) {
                 {
                     DOB: dob,
                     user: {
-                        email: email
+                        email: email,
+                        first_name: first_name,
+                        last_name: last_name
                     },
                 },
                 {headers:{
@@ -71,6 +77,14 @@ function StudentDetail(props) {
         }
     }
 
+    function firstNameHandler(event) {
+        setFirst_name(event.target.value);
+    }
+
+    function lastNameHandler(event) {
+        setLast_name(event.target.value);
+    }
+
     return (
         <div>
             {hasToken?
@@ -86,6 +100,14 @@ function StudentDetail(props) {
                                                 <td><input className={"form-control"}  id={"username"} type={"text"} value={username} disabled={true}/></td>
                                             </tr>
                                             <tr>
+                                                <td><label className={"control-label text-right align-middle"}>First Name</label></td>
+                                                <td><input className={"form-control"}  id={"first_name"} type={"text"} value={first_name} onChange={firstNameHandler} /></td>
+                                            </tr>
+                                            <tr>
+                                                <td><label className={"control-label text-right align-middle"}>Last Name</label></td>
+                                                <td><input className={"form-control"}  id={"last_name"} type={"text"} value={last_name} onChange={lastNameHandler} /></td>
+                                            </tr>
+                                            <tr>
                                                 <td><label className={" control-label text-right align-middle"}>Email</label></td>
                                                 <td><input className={"form-control"} id={"email"} type={"text"} value={email} onChange={emailHandler} /></td>
                                             </tr>
@@ -99,7 +121,7 @@ function StudentDetail(props) {
                                         <thead>
                                            <tr>
                                                <td><button className={"btn btn-success form-control"} onClick={updateStudent}>Submit</button></td>
-                                               <td><Link to={"/LecturerList"} className={"btn btn-success form-control"}>Cancel</Link></td>
+                                               <td><Link to={"/StudentList"} className={"btn btn-success form-control"}>Cancel</Link></td>
                                            </tr>
                                         </thead>
                                     </table>

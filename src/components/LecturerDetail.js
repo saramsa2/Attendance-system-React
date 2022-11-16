@@ -13,6 +13,8 @@ function LecturerDetail(props) {
     const [email, setEmail] = useState("");
     const [dob, setDob] = useState("");
     const [user_id, setUser_id] = useState("");
+    const [first_name, setFirst_name] = useState("");
+    const [last_name, setLast_name] = useState("");
 
     useEffect(() =>{
         axios.get(BaseUrl + "lecturer_viewset/" + staff_id + "/",
@@ -24,6 +26,8 @@ function LecturerDetail(props) {
             .then(response => {
                 setUser_id(response.data.user.id);
                 setUsername(response.data.user.username);
+                setFirst_name(response.data.user.first_name);
+                setLast_name(response.data.user.last_name);
                 setEmail(response.data.user.email);
                 setDob(response.data.DOB);
             })
@@ -53,7 +57,9 @@ function LecturerDetail(props) {
                 {
                     DOB: dob,
                     user: {
-                        email: email
+                        email: email,
+                        first_name: first_name,
+                        last_name: last_name
                     },
                 },
                 {headers:{
@@ -70,6 +76,14 @@ function LecturerDetail(props) {
         }
     }
 
+    function firstNameHandler(event) {
+        setFirst_name(event.target.value);
+    }
+
+    function lastNameHandler(event) {
+        setLast_name(event.target.value);
+    }
+
     return (
         <div>
             {hasToken?
@@ -83,6 +97,14 @@ function LecturerDetail(props) {
                                             <tr>
                                                 <td><label className={"control-label text-right align-middle"}>Username</label></td>
                                                 <td><input className={"form-control"}  id={"username"} type={"text"} value={username} disabled={true}/></td>
+                                            </tr>
+                                            <tr>
+                                                <td><label className={"control-label text-right align-middle"}>First Name</label></td>
+                                                <td><input className={"form-control"}  id={"first_name"} type={"text"} value={first_name} onChange={firstNameHandler} /></td>
+                                            </tr>
+                                            <tr>
+                                                <td><label className={"control-label text-right align-middle"}>Last Name</label></td>
+                                                <td><input className={"form-control"}  id={"last_name"} type={"text"} value={last_name} onChange={lastNameHandler} /></td>
                                             </tr>
                                             <tr>
                                                 <td><label className={" control-label text-right align-middle"}>Email</label></td>

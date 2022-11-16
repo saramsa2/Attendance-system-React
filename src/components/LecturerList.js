@@ -68,7 +68,9 @@ function LecturerList(props) {
                     <thead className={"table-dark"}>
                     <tr>
                         <th scope="col">Staff ID</th>
-                        <th scope="col">Name</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
                         <th scope="col">Email</th>
                         <th scope="col">Update</th>
                         <th scope="col">Delete</th>
@@ -78,8 +80,10 @@ function LecturerList(props) {
                         {lecturers.map(lecturer =>
                             <tr key={lecturer.staff_id}>
                                 <td>{lecturer.staff_id}</td>
-                                <td> <UserName userId={lecturer.user.id} /></td>
-                                <td> <UserEmail userId={lecturer.user.id} /></td>
+                                <td>{lecturer.user.username}</td>
+                                <td>{lecturer.user.first_name}</td>
+                                <td>{lecturer.user.last_name}</td>
+                                <td>{lecturer.user.email}</td>
                                 <td><Link  to={"/LecturerDetail"} state={{staff_id:lecturer.staff_id}} className={"btn btn-success"}>Update</Link></td>
                                 <td><button className={"btn btn-success"} value={lecturer.user.id} onClick={deleteLecturer}>Delete</button> </td>
                             </tr>

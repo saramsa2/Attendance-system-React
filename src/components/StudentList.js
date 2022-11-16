@@ -67,7 +67,9 @@ function StudentList(props) {
                         <thead className={"table-dark"}>
                         <tr>
                             <th scope="col">Student ID</th>
-                            <th scope="col">Name</th>
+                            <th scope="col">Username</th>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Last Name</th>
                             <th scope="col">Email</th>
                             <th scope="col">Update</th>
                             <th scope="col">Delete</th>
@@ -77,8 +79,10 @@ function StudentList(props) {
                             {students.map(student =>
                                 <tr key={student.student_id}>
                                     <td>{student.student_id}</td>
-                                    <td><UserName userId={student.user.id} /></td>
-                                    <td><UserEmail userId={student.user.id} /></td>
+                                    <td>{student.user.username}</td>
+                                    <td>{student.user.first_name}</td>
+                                    <td>{student.user.last_name}</td>
+                                    <td>{student.user.email}</td>
                                     <td><Link to={"/StudentDetail"} state={{student_id:student.student_id}} className={"btn btn-success"}>Update</Link></td>
                                     <td><button className={"btn btn-success"} value={student.user.id} onClick={deleteStudent}>Delete</button> </td>
                                 </tr>

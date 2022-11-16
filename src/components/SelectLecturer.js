@@ -43,7 +43,7 @@ function SelectLecturer(props) {
     },[token])
 
     lecturers.map(lecturer => {
-        LecturerOptions.push({value: lecturer.staff_id, label: <UserName userId={lecturer.user.id} /> });
+        LecturerOptions.push({value: lecturer.staff_id, label: lecturer.user.username });
     });
 
     function lecturerHandler(event) {
@@ -52,14 +52,13 @@ function SelectLecturer(props) {
         } else {
             setSelectedLecturer(event.value)
         }
-        setSelectedLecturer(event.value)
     }
 
     return (
         <div>
             {hasToken ?
                 <React.Fragment>
-                    <Select className={"basic-single"} classNamePrefix="select" isSearchable={true} isClearable={true}
+                    <Select id={"selector"} className={"basic-single"} isSearchable={true} isClearable={true}
                             value={LecturerOptions.find(object => object.value === selectedLecturer)}
                             options={LecturerOptions}  onChange={lecturerHandler}  menuPortalTarget={document.querySelector('body')}/>
                 </React.Fragment>
