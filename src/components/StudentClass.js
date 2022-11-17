@@ -95,7 +95,6 @@ function StudentClass(props) {
                             <th scope="col">Course</th>
                             <th scope="col">Year</th>
                             <th scope="col">Semester</th>
-                            <th scope="col">Students No.</th>
                         </tr>
                         </thead>
 
@@ -109,7 +108,6 @@ function StudentClass(props) {
                                     <td><CourseName courseId={theClass.course}/></td>
                                     <td>{semesters.find(object => {return object.id === theClass.semester}).year}</td>
                                     <td>{semesters.find(object => {return object.id === theClass.semester}).semester}</td>
-                                    <td>{theClass.student.findLastIndex(object => {return object > 1}) + 1}</td>
                             </tr>
                         )}
                         </tbody>

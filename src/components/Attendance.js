@@ -114,15 +114,14 @@ function Attendance(props) {
                     {headers:{
                     "Authorization": "Token "+token
                 }})
+
             })
         )
             .then(response => {
-                alert("New date is created");
                 setChecker(checker + 1);
             })
             .catch(error=> {
                 console.log(error);
-                alert("Failed to add new date");
             });
     }
 

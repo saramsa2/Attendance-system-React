@@ -17,7 +17,24 @@ function ClassDetail(props) {
     const [course, setCourse] = useState("");
     const [lecturer, setLecturer] = useState("");
     const [students, setStudents] = useState([]);
+    const [collegeDays, setCollegeDays] = useState([]);
 
+    useEffect(() => {
+        if(hasToken) {
+            axios.get(BaseUrl + "collegeday_viewset/",
+                {
+                    headers: {
+                        "Authorization": "Token " + token
+                    }
+                })
+                .then(response => {
+                    setCollegeDays(response.data);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
+    },[hasToken])
 
     useEffect(() => {
         if(hasToken) {
@@ -75,6 +92,24 @@ function ClassDetail(props) {
                 });
         }
 
+        if(collegeDays.length > 0 && class_id != "") {
+            let newCollegeDay = []
+            Promise.all(
+                collegeDays.map(collegeDay => {
+                    if(collegeDay.theClass === class_id && !students.includes(collegeDay.student)){
+
+                        axios.delete(BaseUrl+ "collegeday_viewset/" + collegeDay.id +"/")
+
+                    }
+                })
+            )
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        }
     }
 
     function numberHandler(event) {
