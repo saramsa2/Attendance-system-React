@@ -163,7 +163,7 @@ function ClassList(props) {
                     : <p></p> }
             </div>
             :
-                <div>You don't have permission</div>
+                <h1>Waiting for loading</h1>
             }
         </div>
     );

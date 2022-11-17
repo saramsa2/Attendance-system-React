@@ -106,7 +106,7 @@ function SemesterList(props) {
                 </footer>
             </div>
             :
-                <h1>You don't have permission</h1>
+                <h1>Waiting for loading</h1>
             }
         </div>
     );
