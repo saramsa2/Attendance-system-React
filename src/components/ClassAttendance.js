@@ -29,6 +29,11 @@ function ClassAttendance(props) {
         setAttendCounters(studentAttend)
     }, [classStudents, collegeDays, checker]);
 
+    useEffect(() => {
+        setChecker(checker+1)
+    }, [props]);
+
+
 
     useEffect(() => {
         if(hasToken) {
@@ -175,7 +180,7 @@ function ClassAttendance(props) {
                                         <Button className={"btn btn-danger"} style={{width:200}} value={classCollegeDay.find(object => object.student === student).id}
                                                 onClick={attendanceHandler}>Absent</Button>}
                                     </div>
-                                    :<p>WAIT</p>}</td>
+                                    :<p>-</p>}</td>
                             </tr>
                         )}
                         </tbody>

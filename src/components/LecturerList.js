@@ -9,8 +9,26 @@ import {Link} from "react-router-dom";
 function LecturerList(props) {
     const [token, setToken] = useState("");
     const [hasToken, setHasToken] = useState(false);
+    const [userGroup, setUserGroup] = useState("");
     const [checker, setChecker] = useState(1);
     const [lecturers, setLecturers] = useState([]);
+
+    useEffect(() => {
+        if(hasToken) {
+            axios.get(BaseUrl + "usergroup/",
+                {
+                    headers: {
+                        "Authorization": "Token " + token
+                    }
+                })
+                .then(response => {
+                    setUserGroup(response.data[0].name);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
+    }, [hasToken]);
 
     useEffect(() => {
         if(hasToken) {
@@ -61,7 +79,7 @@ function LecturerList(props) {
 
     return (
         <div className={"container"}>
-            {hasToken?
+            {hasToken && userGroup==="Admin"?
             <div className={"table-responsive table-scroll"} data-mdb-perfect-scrollbar={"true"}>
                 <h2>Lecturer List</h2>
                 <table className={"table table-striped mb-0 card-body p-0"}>
@@ -95,7 +113,7 @@ function LecturerList(props) {
                 </footer>
             </div>
             :
-            <div>You don't have permission</div>
+            <h1>You don't have permission</h1>
             }
         </div>
     );

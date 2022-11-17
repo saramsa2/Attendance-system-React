@@ -2,17 +2,32 @@ import React, {useEffect, useState} from 'react';
 
 import axios from "axios";
 import {BaseUrl} from "./constants";
-import UserName from "./UserName";
-import UserEmail from "./UserEmail";
-import AddLecturer from "./AddLecturer";
 import AddStudent from "./AddStudent";
 import {Link} from "react-router-dom";
 
 function StudentList(props) {
     const [token, setToken] = useState("");
     const [hasToken, setHasToken] = useState(false);
+    const [userGroup, setUserGroup] = useState("");
     const [checker, setChecker] = useState("");
     const [students, setStudents] = useState([]);
+
+    useEffect(() => {
+        if(hasToken) {
+            axios.get(BaseUrl + "usergroup/",
+                {
+                    headers: {
+                        "Authorization": "Token " + token
+                    }
+                })
+                .then(response => {
+                    setUserGroup(response.data[0].name);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
+    }, [hasToken]);
 
     useEffect(() => {
         if(hasToken) {
@@ -60,7 +75,7 @@ function StudentList(props) {
 
     return (
         <div className={"container"} style={{paddingBottom:"200px"}}>
-            {hasToken ?
+            {hasToken && userGroup==="Admin"?
                 <div className={"table-responsive table-scroll"} data-mdb-perfect-scrollbar={"true"} >
                     <h2>Student List</h2>
                     <table className={"table table-striped mb-0 card-body p-0"}>
@@ -94,7 +109,7 @@ function StudentList(props) {
                     </footer>
                 </div>
             :
-            <div>You don't have permission</div>
+            <h1>You don't have permission</h1>
             }
         </div>
     );

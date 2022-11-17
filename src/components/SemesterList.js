@@ -7,8 +7,26 @@ import {Link} from "react-router-dom";
 function SemesterList(props) {
     const [token, setToken] = useState("");
     const [hasToken, setHasToken] = useState(false);
+    const [userGroup, setUserGroup] = useState("");
     const [semesters, setSemesters] = useState([]);
     const [checker, setChecker] = useState(1);
+
+    useEffect(() => {
+        if(hasToken) {
+            axios.get(BaseUrl + "usergroup/",
+                {
+                    headers: {
+                        "Authorization": "Token " + token
+                    }
+                })
+                .then(response => {
+                    setUserGroup(response.data[0].name);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
+    }, [hasToken]);
 
     useEffect(() => {
         if(hasToken) {
@@ -55,7 +73,7 @@ function SemesterList(props) {
 
     return (
         <div className={"container"}  style={{paddingBottom:"200px"}}>
-            {hasToken?
+            {hasToken && userGroup==="Admin"?
             <div>
                 <div className={"table-responsive table-scroll"} data-mdb-perfect-scrollbar={"true"}>
                     <table className={"table table-striped mb-0 card-body p-0 table-hover table-fixed"}>
@@ -88,7 +106,7 @@ function SemesterList(props) {
                 </footer>
             </div>
             :
-                <div>You don't have permission</div>
+                <h1>You don't have permission</h1>
             }
         </div>
     );

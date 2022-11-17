@@ -3,6 +3,7 @@ import axios from "axios";
 import {BaseUrl} from "./constants";
 import {useLocation} from "react-router-dom";
 import ClassAttendance from "./ClassAttendance";
+import StudentClassAttendance from "./StudentClassAttendance";
 
 function Attendance(props) {
     const location=useLocation();
@@ -12,8 +13,6 @@ function Attendance(props) {
     const [checker, setChecker] = useState("");
     const [collegeDays, setCollegeDays] = useState([]);
     const [userGroup, setUserGroup] = useState("");
-    // Admin, Lecturer, Student
-
     const [classDates, setClassDates] = useState([]);
     const [classStudents, setClassStudents] = useState([]);
     const [selectedDate, setSelectedDate] = useState("summary");
@@ -131,40 +130,91 @@ function Attendance(props) {
         setSelectedDate(event.target.value)
     }
 
+    function deleteDate(event) {
+        let deleteCollegeDays = [];
+        let deleteDate = event.target.value;
+        collegeDays.map(collegeDay => {
+            if(collegeDay.theClass === class_id && collegeDay.date === deleteDate) {
+                deleteCollegeDays.push(collegeDay.id)
+            }
+        })
+
+        Promise.all(
+            deleteCollegeDays.map(collegeDay => {
+                axios.delete(BaseUrl+"collegeday_viewset/" + collegeDay + "/",
+                    {headers:{
+                    "Authorization": "Token "+token
+                }})
+            })
+        )
+            .then(response => {
+                alert("The date is deleted");
+                setChecker(checker + 1);
+            })
+            .catch(error=> {
+                console.log(error);
+                alert("Failed to add new date");
+            });
+    }
+
     return (
         <div>
             {hasToken?
                 <React.Fragment>
-                    <h2>{location.state.class_number} Class Attendance</h2>
-                    <div className={"row"}>
-                        <div className="col-3  m-2">
-                            <div className={"card" } style={{margin:5}}>
-                                <input type="date" name="new_college_day" id={"newDate"} style={{margin:5}} defaultValue={defaultDate}/>
-                                <button className={"btn btn-success"} onClick={addNewDate} style={{margin:5}}>Create new Date</button>
+                    {userGroup === "Student" ?
+                        <React.Fragment>
+                            <StudentClassAttendance class_id={class_id}/>
+                        </React.Fragment>
+                        :
+                        <React.Fragment>
+                            <h2>{location.state.class_number} Class Attendance</h2>
+                            <div className={"row"}>
+                                <div className="col-3  m-2">
+                                    {userGroup === "Lecturer" ?
+                                        <div className={"card"} style={{margin: 5}}>
+                                            <input type="date" name="new_college_day" id={"newDate"} style={{margin: 5}}
+                                                   defaultValue={defaultDate}/>
+                                            <button className={"btn btn-success"} onClick={addNewDate}
+                                                    style={{margin: 5}}>Create new Date
+                                            </button>
+                                        </div> :
+                                        <p></p>}
+
+                                    <div className="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
+                                         style={{margin: 5}} name={"dateButton"}
+                                         aria-orientation="vertical">
+
+                                        <button className="btn btn-warning" style={{margin: 5}} id={"summary"}
+                                                value={"summary"} onClick={selectDayHandler}>
+                                            Summary
+                                        </button>
+                                        {classDates.map(classDate =>
+                                            <button key={classDate} className=" btn btn-outline-primary"
+                                                    style={{margin: 5}} id={classDate} name={"dateButton"}
+                                                    value={classDate} onClick={selectDayHandler}>
+                                                {classDate}
+                                                <button className={"float-end btn btn-danger"} value={classDate}
+                                                        onClick={deleteDate}>×
+                                                </button>
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
+
+                                <div className="col-8 tab-content" id="v-pills-tabContent">
+                                    <div className={"tab-pane fade show active"} id={"panel"}
+                                         aria-labelledby={"v-pills-home-tab"}>
+                                        <ClassAttendance state={{
+                                            class_id: class_id,
+                                            selected_date: selectedDate,
+                                            total_day: classDates.length
+                                        }}/>
+                                    </div>
+                                </div>
+
                             </div>
-
-
-                            <div className="nav flex-column nav-pills" id="v-pills-tab" role="tablist" style={{margin:5}} name={"dateButton"}
-                                 aria-orientation="vertical">
-
-                                    <button className="btn btn-warning" style={{margin:5}} id={"summary"}
-                                       value={"summary"} onClick={selectDayHandler}>
-                                        Summary </button>
-                                    {classDates.map(classDate =>
-                                        <button key={classDate} className=" btn btn-outline-primary"  style={{margin:5}} id={classDate} name={"dateButton"}
-                                            value={classDate} onClick={selectDayHandler}>
-                                            {classDate} </button>
-                                    )}
-                            </div>
-                        </div>
-
-                        <div className="col-8 tab-content" id="v-pills-tabContent">
-                            <div className={"tab-pane fade show active"} id={"panel"} aria-labelledby={"v-pills-home-tab"}>
-                                <ClassAttendance state={{class_id:class_id, selected_date: selectedDate, total_day:classDates.length}} />
-                            </div>
-                        </div>
-
-                    </div>
+                        </React.Fragment>
+                    }
                 </React.Fragment>
             :
                 <React.Fragment>

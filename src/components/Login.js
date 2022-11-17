@@ -1,7 +1,7 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import axios from "axios";
 import {BaseUrl} from "./constants";
-import {Link, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 function Login(props) {
     const [token, setToken] = useState("");
@@ -14,6 +14,7 @@ function Login(props) {
         if(localStorage.getItem("token")) {
             setToken(localStorage.getItem("token"));
             setHasToken(true);
+            navigate("/ClassList")
         }
     },[token])
     
@@ -37,7 +38,7 @@ function Login(props) {
                 setHasToken(true);
                 localStorage.setItem("token", response.data.token);
                 window.location.reload(false);
-                navigate("/");
+                navigate("/ClassList");
             })
             .catch(error => {
                 console.log(error);
@@ -57,7 +58,7 @@ function Login(props) {
                 localStorage.removeItem("token");
                 setToken("");
                 setHasToken(false);
-                window.location.reload(false);
+                navigate("/Home")
             })
             .catch(error => {
                 console.log(error);
